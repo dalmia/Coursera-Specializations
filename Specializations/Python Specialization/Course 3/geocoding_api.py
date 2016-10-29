@@ -5,4 +5,4 @@ address=raw_input("Address :")
 url=base_url + urllib.urlencode({'sensor':'false','address':address})
 data=urllib.urlopen(url).read()
 val=json.loads(str(data))
-print val['results'][1]['place_id']
+print val['results'][0]['place_id']
