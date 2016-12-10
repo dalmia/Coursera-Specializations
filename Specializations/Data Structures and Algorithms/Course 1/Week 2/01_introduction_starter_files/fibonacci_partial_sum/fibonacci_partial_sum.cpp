@@ -9,39 +9,22 @@ long long get_fibonacci_partial_sum_naive(long long m, long long n) {
     if (n <= 1)
         return n;
 
-	long long fsum[maxn];
-    long long previous = 0;
-    long long current  = 1;
+	int fsum[60];
     fsum[0]=0;
 	fsum[1]=1;
-	int count=2;
+    int prev=0, next=1;
 
-	for (long long i = 2; i <= n; ++i) {
-        long long tmp_previous = previous;
-        previous = current;
-        current = (tmp_previous + current)%10;
-        fsum[i]=(fsum[i-1]+current)%10;
-		if(fsum[i]==1 && fsum[i-1]==0){
-			count--;
-			break;
-		}
-		count++;
+	for (int i = 2; i < 60; ++i) {
+        int current = prev+next;
+        fsum[i] = (fsum[i-1] + current) % 10;
+        prev=next;
+        next=current;
     }
 
-	cout<<count<<endl;
-	int t_n=n%count;
-	int t_m=m%count;
-	int sum=0;
-
-	if(t_m<t_n){
-		sum=fsum[t_n]-fsum[t_m];
-	}else{
-		sum+=fsum[t_n];
-		if(t_m>0){
-			sum+=fsum[count]-fsum[t_m];
-		}else sum+=fsum[count];
-	}
-    return sum % 10;
+    m = m%60;
+    n = n%60;
+    int dig = (fsum[n] - (m>0? fsum[m-1]:0))%10;
+    return (dig+10)%10;
 }
 
 int main() {
