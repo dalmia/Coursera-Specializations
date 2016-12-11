@@ -2,16 +2,16 @@
 #include <vector>
 
 using std::vector;
+using namespace std;
+#define MAX(x,y) ((x)>(y)?(x):(y))
 
-int optimal_weight(int W, const vector<int> &w) {
+int optimal_weight(int W, const vector<int> &w,int index) {
   //write your code here
-  int current_weight = 0;
-  for (size_t i = 0; i < w.size(); ++i) {
-    if (current_weight + w[i] <= W) {
-      current_weight += w[i];
-    }
-  }
-  return current_weight;
+  if(W==0 || index==w.size()) return 0;
+  if(w[index]>W) return optimal_weight(W,w,index+1);
+  int weights=MAX(w[index]+optimal_weight(W-w[index],w,index+1),optimal_weight(W,w,index+1));
+
+  return weights;
 }
 
 int main() {
@@ -21,5 +21,5 @@ int main() {
   for (int i = 0; i < n; i++) {
     std::cin >> w[i];
   }
-  std::cout << optimal_weight(W, w) << '\n';
+  std::cout << optimal_weight(W, w,0) << '\n';
 }

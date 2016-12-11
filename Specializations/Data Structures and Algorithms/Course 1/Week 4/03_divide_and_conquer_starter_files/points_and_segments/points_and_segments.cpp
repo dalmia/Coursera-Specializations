@@ -1,61 +1,65 @@
 #include <iostream>
+#include <cstdio>
 #include <vector>
+#include <string>
 #include <algorithm>
+#include <map>
 
-using std::vector;
+#define MAX(x,y) ((x)>(y)?(x):(y))
+#define MIN(x,y) ((x)<(y)?(x):(y))
+#define pb push_back
+#define mp make_pair
+#define rep(i,n) for(i=0;i<n;i++)
+#define repr(i,j,n) for(i=j;i<=n;i++)
+#define endl '\n'
 using namespace std;
+typedef long long ll;
+typedef vector<ll> vll;
+typedef vector<vector<int> > graph;
+const ll maxn = (ll) 1e5+9;
+const ll mod = (ll) 1e9+7;
 
-struct sortval{
-	bool operator()(pair<int,int> a,pair<int,int> b){
-		return a.first<b.first;
-	}
-};
+//ll a[maxn];
+//ll dp[1024][1024];
+std::vector<pair<ll, ll> > pts;
+ll pt[maxn];
+map<int, std::vector<int> > mapping;
 
-
-int calc(std::vector< pair<int,int> > v,int point,int l,int r){
-	if(l>r) return 0;
-	int mid=(l+r)/2;
-	// cout<<"mid"<<mid<<endl;
-	// cout<<point<<endl;
-	// cout<<v[mid].first<<" "<<v[mid].second<<endl;
-	// cout<<endl;
-	if(v[mid].first>point) return calc(v,point,l,mid-1);
-	if(v[mid].second<point) return calc(v,point,mid+1,r);
-	return 1+calc(v,point,l,mid-1)+calc(v,point,mid+1,r);
+bool comp(pair<ll, ll> l, pair<ll, ll> r){
+    if(l.first != r.first) return l.first<r.first;
+    else return l.second<r.second;
 }
 
-vector<int> fast_count_segments(vector<int> starts, vector<int> ends, vector<int> points) {
-  vector<int> cnt(points.size());
-  std::vector< pair<int,int> > pairs(starts.size());
-  for (int i = 0; i < starts.size(); i++) {
-  	pairs[i]=make_pair(starts[i],ends[i]);
-	// cout<<"S"<<starts[i];
-	// cout<<pairs[i].first<<endl;
-  }
-  sort(pairs.begin(),pairs.end(),sortval());
-  for (int i = 0; i < starts.size(); i++) {
-  	cout<<pairs[i].first<<endl;
-  }
-  for (size_t i = 0; i < points.size(); i++) {
-  	cnt[i]=calc(pairs,points[i],0,starts.size()-1);
-  }
-  return cnt;
-}
+int main()
+{
+	std::ios::sync_with_stdio(0);
+	ll i,j,k,t,q,m,l,r,n;
+    cin>>n>>m;
+    rep(i, n){
+        cin>>j>>k;
+        pts.pb(mp(j, 0)); pts.pb(mp(k, 2));
+    }
+    rep(i, m){
+        cin>>j;
+        pts.pb(mp(j,1));
+        mapping[j].pb(i);
+    }
+    sort(pts.begin(), pts.end(), comp);
 
-int main() {
-  int n, m;
-  std::cin >> n >> m;
-  vector<int> starts(n), ends(n);
-  for (size_t i = 0; i < starts.size(); i++) {
-    std::cin >> starts[i] >> ends[i];
-  }
-  vector<int> points(m);
-  for (size_t i = 0; i < points.size(); i++) {
-    std::cin >> points[i];
-  }
-  //use fast_count_segments
-  vector<int> cnt = fast_count_segments(starts, ends, points);
-  for (size_t i = 0; i < cnt.size(); i++) {
-    std::cout << cnt[i] << ' ';
-  }
+    k=0;
+    j=0;
+    rep(i, pts.size()){
+        if(pts[i].second == 0) k++;
+        else if(pts[i].second == 2) k--;
+        else{
+            std::vector<int> in = mapping[pts[i].first];
+            for (size_t j = 0; j < in.size(); j++) {
+                pt[in[j]] = k;
+            }
+        }
+    }
+
+    for (size_t i = 0; i < m; i++) {
+        cout<<pt[i]<<' ';
+    }
 }

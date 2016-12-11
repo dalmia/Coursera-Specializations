@@ -16,17 +16,16 @@ std::vector<int> partition3(vector<int> &a, int l, int r) {
   }
   swap(a[l], a[j]);
   int k=j;
-
-  for(int i=j+1; i<=r;i++){
-	  if (a[i] == a[j]) {
-        k++;
-        swap(a[i], a[k]);
-      }
+  for (int i = j + 1; i <= r; i++) {
+    if (a[i] == x) {
+      k++;
+      swap(a[i], a[k]);
+    }
   }
-  vector<int> list(2);
-  list[0]=j;
-  list[1]=k;
-  return list;
+  std::vector<int> part;
+  part.push_back(j);
+  part.push_back(k);
+  return part;
 }
 
 void randomized_quick_sort(vector<int> &a, int l, int r) {
@@ -36,10 +35,10 @@ void randomized_quick_sort(vector<int> &a, int l, int r) {
 
   int k = l + rand() % (r - l + 1);
   swap(a[l], a[k]);
-  std::vector<int> v = partition3(a, l, r);
+  std::vector<int> m = partition3(a, l, r);
 
-  randomized_quick_sort(a, l, v[0]- 1);
-  randomized_quick_sort(a, v[1] + 1, r);
+  randomized_quick_sort(a, l, m[0] - 1);
+  randomized_quick_sort(a, m[1] + 1, r);
 }
 
 int main() {
