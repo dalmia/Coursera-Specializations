@@ -1,7 +1,7 @@
 # Coursera
 Solutions to assignments of the following Specializations on Coursera:
 - [Deep Learning][1] (New)
-- [Python][2] 
+- [Python For Everybody][2] 
 - [Algorithms &amp; Data Structures][3]
 - [Machine Learning][4] 
 
