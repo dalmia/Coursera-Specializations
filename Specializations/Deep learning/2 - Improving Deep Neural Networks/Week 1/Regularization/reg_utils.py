@@ -317,6 +317,7 @@ def plot_decision_boundary(model, X, y):
     # Predict the function value for the whole grid
     Z = model(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
+    print(Z)
     # Plot the contour and training examples
     plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
     plt.ylabel('x2')
