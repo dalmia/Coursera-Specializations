@@ -6,6 +6,8 @@ Solutions to assignments of the following Specializations on Coursera:
 - [Machine Learning][4] 
 - [Image Processing][5] (Ongoing)
 
+NOTE: Please ★ the repo if you find it useful.
+
 [1]: https://www.coursera.org/specializations/deep-learning
 [2]: https://www.coursera.org/specializations/python
 [3]: https://www.coursera.org/specializations/data-structures-
